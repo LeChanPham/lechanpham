@@ -14,6 +14,11 @@ from utils.general import check_img_size, check_requirements, check_imshow, non_
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
 
+# thư viện kết nối arduino
+import pyfirmata 
+
+# COM3 là tên port kết nối với arduino
+board = pyfirmata.Arduino('COM3')
 
 def detect(save_img=False):
     source, weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
@@ -193,3 +198,7 @@ if __name__ == '__main__':
                 strip_optimizer(opt.weights)
         else:
             detect()
+
+while True:
+    board.digital[13].write(1)
+    #time.sleep(1)
